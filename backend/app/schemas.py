@@ -51,3 +51,14 @@ class GraphOut(BaseModel):
     unit: str
     nodes: list[NodeOut]
     edges: list[Edge]
+
+
+class AnswerIn(BaseModel):
+    concept_id: str
+    correct: bool  # TEMPORARY: client-supplied until Day 3 grades answers from a question bank
+    question_id: str = "manual"
+    answer: str = ""
+
+
+class MasteryOut(BaseModel):
+    mastery: dict[str, float]

@@ -36,3 +36,9 @@ def test_invalid_params_rejected():
         BKTParams(p_slip=0)
     with pytest.raises(ValueError):
         BKTParams(p_slip=0.6, p_guess=0.5)
+
+
+def test_foundational_concepts_start_higher():
+    from app.engine.bkt import params_for
+    assert params_for("vectors").p_init == 0.5
+    assert params_for("incline").p_init == 0.3

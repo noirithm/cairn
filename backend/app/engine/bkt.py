@@ -6,7 +6,7 @@ Hidden state per concept: does the student know it? We track P(known).
   p_slip    P(S)   knows it but answers wrong anyway
   p_guess   P(G)   doesn't know it but answers right anyway
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 
 @dataclass(frozen=True)
@@ -38,3 +38,15 @@ def bkt_update(p: float, correct: bool, params: BKTParams) -> float:
         posterior = bayes_update(p, params.p_slip, 1 - params.p_guess)
     # Step 2: the student may have learned from this opportunity.
     return posterior + (1 - posterior) * params.p_transit
+
+
+DEFAULT_PARAMS = BKTParams()
+
+# Foundational concepts are more likely known before the unit starts.
+_P_INIT_OVERRIDES = {"vectors": 0.5, "kinematics": 0.5, "force": 0.5, "mass_inertia": 0.4}
+
+
+def params_for(concept_id: str) -> BKTParams:
+    if concept_id in _P_INIT_OVERRIDES:
+        return replace(DEFAULT_PARAMS, p_init=_P_INIT_OVERRIDES[concept_id])
+    return DEFAULT_PARAMS
