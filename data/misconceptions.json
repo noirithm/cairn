@@ -1,0 +1,25 @@
+{
+  "misconceptions": [
+    {"id": "m_motion_needs_force", "name": "Force is needed to maintain motion", "concept_id": "newton_1",
+     "description": "Believes an object moving at constant velocity must have a net force pushing it along.",
+     "explanation": "Motion does not need a force; changing motion does. With zero net force, velocity stays constant (Newton's first law). Friction and drag are forces that slow things down, which is why everyday objects seem to need a push."},
+    {"id": "m_force_prop_velocity", "name": "Net force is proportional to velocity", "concept_id": "newton_2",
+     "description": "Believes a faster object has a larger net force, instead of net force setting acceleration.",
+     "explanation": "Net force sets acceleration (F = ma), not speed. A constant net force gives a constant acceleration, so speed grows steadily while the force stays the same."},
+    {"id": "m_mass_weight_same", "name": "Mass and weight are the same thing", "concept_id": "weight",
+     "description": "Treats weight as a property of the object that changes its mass when gravity changes.",
+     "explanation": "Mass is how much matter an object has and never changes with location. Weight is the gravitational force, mg, and changes with g. On the Moon you weigh less but your mass is the same."},
+    {"id": "m_bigger_pushes_harder", "name": "The bigger object exerts the larger force", "concept_id": "newton_3",
+     "description": "Believes in a collision the heavier or faster object pushes harder on the lighter one.",
+     "explanation": "Newton's third law: the two forces in a pair are always equal in size and opposite in direction, whatever the masses. The lighter object just accelerates more because a = F/m."},
+    {"id": "m_third_law_same_object", "name": "Action-reaction forces act on the same object", "concept_id": "newton_3",
+     "description": "Thinks equal-and-opposite forces on one object are a third-law pair.",
+     "explanation": "A third-law pair acts on two different objects. Forces on one object that balance are not a pair; the reaction to the Earth's pull on a book is the book's pull on the Earth."},
+    {"id": "m_normal_equals_weight", "name": "The normal force always equals mg", "concept_id": "normal",
+     "description": "Assumes a surface always pushes back with exactly the object's weight.",
+     "explanation": "The normal force is whatever the surface needs to provide to stop the object sinking in. Extra downward pushes, or an incline, change it. Find it from the force balance, not from mg."},
+    {"id": "m_friction_always_mu_n", "name": "Friction always equals mu times N", "concept_id": "friction",
+     "description": "Uses the maximum static friction value even when the object is not about to slip.",
+     "explanation": "Static friction matches the applied force, up to a maximum of mu_s times N. If the object is not moving, friction equals whatever push balances it, which can be well below mu_s N."}
+  ]
+}

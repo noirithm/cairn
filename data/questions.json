@@ -1,0 +1,105 @@
+{
+  "questions": [
+    {"id": "q_puck_ice", "concept_id": "newton_1",
+     "prompt": "A hockey puck slides at constant velocity across frictionless ice. Which horizontal force acts on it?",
+     "options": [
+       {"id": "a", "text": "None. It keeps moving because of inertia.", "correct": true},
+       {"id": "b", "text": "A constant forward force that keeps it moving."},
+       {"id": "c", "text": "A forward force that gradually fades as it slows."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.88, "b": 0.06, "c": 0.06},
+       "m_motion_needs_force": {"a": 0.15, "b": 0.70, "c": 0.15},
+       "m_force_prop_velocity": {"a": 0.20, "b": 0.50, "c": 0.30}
+     },
+     "explanation": "With no friction there is no horizontal force, and with zero net force the velocity stays constant."},
+    {"id": "q_skydiver_terminal", "concept_id": "newton_1",
+     "prompt": "A skydiver falls at constant terminal speed. The net force on her is:",
+     "options": [
+       {"id": "a", "text": "Zero.", "correct": true},
+       {"id": "b", "text": "Downward, equal to her weight."},
+       {"id": "c", "text": "Upward, equal to the air drag."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.88, "b": 0.06, "c": 0.06},
+       "m_motion_needs_force": {"a": 0.20, "b": 0.60, "c": 0.20},
+       "m_force_prop_velocity": {"a": 0.20, "b": 0.50, "c": 0.30}
+     },
+     "explanation": "Constant velocity means zero acceleration, so weight and drag cancel and the net force is zero."},
+    {"id": "q_rocket_thrust", "concept_id": "newton_2",
+     "prompt": "A rocket in deep space fires its engine with constant thrust. As its speed increases, the net force on it:",
+     "options": [
+       {"id": "a", "text": "Stays constant.", "correct": true},
+       {"id": "b", "text": "Increases in proportion to its speed."},
+       {"id": "c", "text": "Drops to zero once it is moving fast."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.88, "b": 0.07, "c": 0.05},
+       "m_force_prop_velocity": {"a": 0.20, "b": 0.70, "c": 0.10},
+       "m_motion_needs_force": {"a": 0.45, "b": 0.20, "c": 0.35}
+     },
+     "explanation": "Constant thrust is a constant net force, which gives constant acceleration. Speed grows, the force does not."},
+    {"id": "q_astronaut_moon", "concept_id": "weight",
+     "prompt": "A 70 kg astronaut travels from Earth to the Moon, where g is about 1.6 m/s^2. Which statement is true?",
+     "options": [
+       {"id": "a", "text": "Her mass stays 70 kg; her weight decreases.", "correct": true},
+       {"id": "b", "text": "Both her mass and her weight decrease."},
+       {"id": "c", "text": "Neither her mass nor her weight changes."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.90, "b": 0.05, "c": 0.05},
+       "m_mass_weight_same": {"a": 0.15, "b": 0.65, "c": 0.20}
+     },
+     "explanation": "Mass is intrinsic. Weight is mg, and g is smaller on the Moon, so the weight drops."},
+    {"id": "q_truck_car", "concept_id": "newton_3",
+     "prompt": "A truck hits a small car head-on. During the collision, the force of the truck on the car is:",
+     "options": [
+       {"id": "a", "text": "Equal in size to the force of the car on the truck.", "correct": true},
+       {"id": "b", "text": "Larger than the force of the car on the truck."},
+       {"id": "c", "text": "Smaller than the force of the car on the truck."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.90, "b": 0.06, "c": 0.04},
+       "m_bigger_pushes_harder": {"a": 0.15, "b": 0.75, "c": 0.10},
+       "m_third_law_same_object": {"a": 0.45, "b": 0.30, "c": 0.25}
+     },
+     "explanation": "Third-law pairs are always equal and opposite. The car is hurt more because it has less mass and accelerates more."},
+    {"id": "q_book_on_table", "concept_id": "newton_3",
+     "prompt": "A book rests on a table. Gravity pulls it down and the table pushes it up with the normal force. Are these two forces an action-reaction pair?",
+     "options": [
+       {"id": "a", "text": "No. Both act on the book; the reaction to gravity is the book pulling on the Earth.", "correct": true},
+       {"id": "b", "text": "Yes. They are equal and opposite, so they form a pair."},
+       {"id": "c", "text": "No. They have different sizes."}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.88, "b": 0.08, "c": 0.04},
+       "m_third_law_same_object": {"a": 0.10, "b": 0.80, "c": 0.10},
+       "m_normal_equals_weight": {"a": 0.30, "b": 0.55, "c": 0.15}
+     },
+     "explanation": "A pair acts on two different objects. These two both act on the book and balance each other, which is a different fact."},
+    {"id": "q_box_push_down", "concept_id": "normal",
+     "prompt": "A 10 kg box sits on a floor. You push straight down on it with 20 N. Taking g = 9.8 m/s^2, the normal force from the floor is:",
+     "options": [
+       {"id": "a", "text": "98 N"},
+       {"id": "b", "text": "118 N", "correct": true},
+       {"id": "c", "text": "78 N"}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.08, "b": 0.87, "c": 0.05},
+       "m_normal_equals_weight": {"a": 0.80, "b": 0.10, "c": 0.10}
+     },
+     "explanation": "The floor must support the weight (98 N) plus your 20 N push: N = 98 + 20 = 118 N."},
+    {"id": "q_crate_static", "concept_id": "friction",
+     "prompt": "A 20 kg crate rests on a floor with mu_s = 0.5. You push horizontally with 40 N and it does not move. Taking g = 9.8 m/s^2, the friction force is:",
+     "options": [
+       {"id": "a", "text": "40 N", "correct": true},
+       {"id": "b", "text": "98 N"},
+       {"id": "c", "text": "0 N"}
+     ],
+     "likelihoods": {
+       "correct": {"a": 0.88, "b": 0.07, "c": 0.05},
+       "m_friction_always_mu_n": {"a": 0.15, "b": 0.75, "c": 0.10}
+     },
+     "explanation": "The crate is at rest, so friction balances the push: 40 N. The 98 N figure (mu_s N) is only the maximum static friction."}
+  ]
+}
