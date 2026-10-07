@@ -6,13 +6,13 @@ class Concept(BaseModel):
     id: str = Field(pattern=r"^[a-z0-9_]+$")
     name: str
     description: str
-    section: str
+    section: str  # OpenStax section reference
 
 
 class Edge(BaseModel):
     prereq: str
     dependent: str
-    # How strongly failing `dependent` implicates `prereq` (Day 2 propagation).
+    # How strongly failing `dependent` implicates `prereq` (propagation weight).
     strength: float = Field(gt=0, le=1)
 
 
@@ -36,6 +36,7 @@ class GraphFile(BaseModel):
         return self
 
 
+# ---- API response shapes ----
 class SessionOut(BaseModel):
     session_id: int
 
@@ -44,7 +45,7 @@ class NodeOut(BaseModel):
     id: str
     name: str
     section: str
-    p_known: float
+    p_known: float  # belief the student knows this concept (0-1)
 
 
 class GraphOut(BaseModel):
@@ -53,12 +54,43 @@ class GraphOut(BaseModel):
     edges: list[Edge]
 
 
-class AnswerIn(BaseModel):
+class OptionOut(BaseModel):  # note: no `correct` flag, the client must not see the answer
+    id: str
+    text: str
+
+
+class QuestionOut(BaseModel):
+    id: str
     concept_id: str
-    correct: bool  # TEMPORARY: client-supplied until Day 3 grades answers from a question bank
-    question_id: str = "manual"
-    answer: str = ""
+    prompt: str
+    options: list[OptionOut]
 
 
-class MasteryOut(BaseModel):
+class NextQuestionOut(BaseModel):
+    question: QuestionOut | None  # None once the bank is used up
+    expected_gain: float = 0.0  # bits of information this question is expected to give
+
+
+class AnswerIn(BaseModel):
+    question_id: str
+    option_id: str
+
+
+class DiagnosisEntry(BaseModel):
+    id: str
+    name: str
+    p: float
+    explanation: str | None = None  # targeted explanation (misconceptions only)
+
+
+class AnswerOut(BaseModel):
+    correct: bool
+    explanation: str
     mastery: dict[str, float]
+    diagnosis: list[DiagnosisEntry]  # all hypotheses, most likely first
+    diagnosed: DiagnosisEntry | None = None  # set once a misconception passes the threshold
+
+
+class DiagnosisOut(BaseModel):
+    diagnosis: list[DiagnosisEntry]
+    entropy: float

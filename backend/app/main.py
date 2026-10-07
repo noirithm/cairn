@@ -4,9 +4,10 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .content import Content
 from .database import init_db, make_engine
 from .graph import ConceptGraph
-from .routes import sessions
+from .routes import quiz, sessions
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -18,8 +19,9 @@ def create_app(db_url: str | None = None) -> FastAPI:
     async def lifespan(app: FastAPI):
         app.state.engine = make_engine(db_url)
         init_db(app.state.engine)
-        # Fail fast: a broken graph.json should crash at startup, not mid-demo.
+        # Fail fast: broken content should crash at startup, not mid-demo.
         app.state.graph = ConceptGraph.load(DATA_DIR / "graph.json")
+        app.state.content = Content.load(DATA_DIR, set(app.state.graph.g.nodes))
         yield
 
     app = FastAPI(title="Cairn", lifespan=lifespan)
@@ -30,6 +32,7 @@ def create_app(db_url: str | None = None) -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(sessions.router)
+    app.include_router(quiz.router)
 
     @app.get("/health")
     def health():
