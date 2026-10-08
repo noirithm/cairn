@@ -10,6 +10,10 @@ def get_content(request: Request):
     return request.app.state.content
 
 
+def get_llm(request: Request):
+    return request.app.state.llm
+
+
 def get_db(request: Request):
     with Session(request.app.state.engine) as session:
         yield session

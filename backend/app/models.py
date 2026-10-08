@@ -32,3 +32,19 @@ class Attempt(SQLModel, table=True):
     answer: str
     correct: bool
     created_at: datetime = Field(default_factory=_now)
+
+
+class TransferProblem(SQLModel, table=True):
+    """A generated problem. The answer is NOT stored: it is rebuilt from (template_id, seed)."""
+    id: int | None = Field(default=None, primary_key=True)
+    student_id: int = Field(foreign_key="student.id", index=True)
+    template_id: str
+    concept_id: str
+    seed: str
+    stem: str  # the text the student saw (template wording or LLM re-wording)
+    unit: str
+    hints_used: int = 0
+    submissions: int = 0
+    solved: bool = False
+    counted: bool = False  # mastery already updated for this problem
+    created_at: datetime = Field(default_factory=_now)

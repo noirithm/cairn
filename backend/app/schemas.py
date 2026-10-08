@@ -94,3 +94,41 @@ class AnswerOut(BaseModel):
 class DiagnosisOut(BaseModel):
     diagnosis: list[DiagnosisEntry]
     entropy: float
+
+
+class TransferIn(BaseModel):
+    concept_id: str | None = None  # omitted -> the weakest concept that has transfer problems
+
+
+class TransferOut(BaseModel):
+    problem_id: int
+    concept_id: str
+    text: str
+    unit: str
+    hints_available: int
+    phrased_by: str  # "template" or "llm"
+
+
+class HintOut(BaseModel):
+    level: int
+    text: str
+    remaining: int
+
+
+class TransferAnswerIn(BaseModel):
+    value: float
+
+
+class TrapOut(BaseModel):
+    misconception_id: str
+    name: str
+    explanation: str
+
+
+class TransferResultOut(BaseModel):
+    correct: bool
+    mastery_updated: bool
+    hints_used: int
+    mastery: dict[str, float]
+    solution: str | None = None  # only revealed once the answer is correct
+    trap: TrapOut | None = None  # set when a wrong answer matches a known misconception
