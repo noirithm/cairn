@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import ConceptGraph from "@/components/ConceptGraph";
@@ -70,12 +71,20 @@ export default function Home() {
           <h1 className="text-lg font-bold tracking-tight">Cairn</h1>
           <p className="text-xs text-slate-400">Newton laws · concept-graph tutor</p>
         </div>
-        <button
-          onClick={() => void load(true)}
-          className="rounded-md border border-slate-700 px-3 py-1.5 text-sm hover:bg-slate-800"
-        >
-          New student
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/teacher"
+            className="rounded-md border border-slate-700 px-3 py-1.5 text-sm hover:bg-slate-800"
+          >
+            Teacher view
+          </Link>
+          <button
+            onClick={() => void load(true)}
+            className="rounded-md border border-slate-700 px-3 py-1.5 text-sm hover:bg-slate-800"
+          >
+            New student
+          </button>
+        </div>
       </header>
 
       {error && (

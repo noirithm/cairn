@@ -100,3 +100,26 @@ export const answerTransfer = (sid: number, pid: number, value: number) =>
     method: "POST",
     body: JSON.stringify({ value }),
   });
+
+// ---- teacher view ----
+export type HeatmapOut = {
+  n_students: number;
+  misconceptions: { id: string; name: string; concept_id: string }[];
+  students: {
+    id: number;
+    name: string;
+    is_simulated: boolean;
+    answered: number;
+    diagnosed: string | null;
+  }[];
+  cells: number[][]; // students x misconceptions, posterior probability
+  stats: {
+    misconception_id: string;
+    name: string;
+    concept_id: string;
+    mean_p: number;
+    diagnosed_count: number;
+  }[];
+  concepts: { concept_id: string; name: string; mean_p_known: number }[];
+};
+export const getHeatmap = () => request<HeatmapOut>("/teacher/heatmap");
