@@ -39,3 +39,9 @@ def replay_belief(content, attempts) -> dict[str, float]:
             continue
         belief = update_belief(belief, q, a.answer)
     return belief
+
+
+def diagnosed_id(belief: dict[str, float]) -> str | None:
+    """Id of the diagnosed misconception, or None (top hypothesis is CORRECT or under the threshold)."""
+    top = max(belief, key=belief.get)
+    return top if top != CORRECT and belief[top] >= DIAGNOSIS_THRESHOLD else None

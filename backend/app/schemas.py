@@ -132,3 +132,40 @@ class TransferResultOut(BaseModel):
     mastery: dict[str, float]
     solution: str | None = None  # only revealed once the answer is correct
     trap: TrapOut | None = None  # set when a wrong answer matches a known misconception
+
+
+class HeatmapStudent(BaseModel):
+    id: int
+    name: str
+    is_simulated: bool
+    answered: int
+    diagnosed: str | None = None  # misconception id once one passes the threshold
+
+
+class HeatmapMisconception(BaseModel):
+    id: str
+    name: str
+    concept_id: str
+
+
+class MisconceptionStat(BaseModel):
+    misconception_id: str
+    name: str
+    concept_id: str
+    mean_p: float  # class-average posterior
+    diagnosed_count: int
+
+
+class ConceptStat(BaseModel):
+    concept_id: str
+    name: str
+    mean_p_known: float
+
+
+class HeatmapOut(BaseModel):
+    n_students: int
+    misconceptions: list[HeatmapMisconception]  # column order of `cells`
+    students: list[HeatmapStudent]  # row order of `cells`
+    cells: list[list[float]]  # students x misconceptions, posterior probability
+    stats: list[MisconceptionStat]  # most diagnosed first
+    concepts: list[ConceptStat]  # class-average mastery per concept

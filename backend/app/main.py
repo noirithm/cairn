@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Callable
@@ -10,13 +11,15 @@ from .database import init_db, make_engine
 from .graph import ConceptGraph
 from .llm.base import LLMClient
 from .llm.factory import from_env
-from .routes import quiz, sessions, transfer
+from .routes import quiz, sessions, teacher, transfer
+from .seed import seed_simulated_students
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 
 def create_app(db_url: str | None = None,
-               llm_factory: Callable[[], LLMClient | None] = from_env) -> FastAPI:
+               llm_factory: Callable[[], LLMClient | None] = from_env,
+               seed_demo: bool = False) -> FastAPI:
     """App factory: tests pass an in-memory DB and no LLM; normal runs read CAIRN_LLM."""
 
     @asynccontextmanager
@@ -27,6 +30,8 @@ def create_app(db_url: str | None = None,
         app.state.graph = ConceptGraph.load(DATA_DIR / "graph.json")
         app.state.content = Content.load(DATA_DIR, set(app.state.graph.g.nodes))
         app.state.llm = llm_factory()
+        if seed_demo:  # no-op if simulated students already exist
+            seed_simulated_students(app.state.engine, app.state.graph, app.state.content)
         yield
 
     app = FastAPI(title="Cairn", lifespan=lifespan)
@@ -39,6 +44,7 @@ def create_app(db_url: str | None = None,
     app.include_router(sessions.router)
     app.include_router(quiz.router)
     app.include_router(transfer.router)
+    app.include_router(teacher.router)
 
     @app.get("/health")
     def health():
@@ -47,4 +53,4 @@ def create_app(db_url: str | None = None,
     return app
 
 
-app = create_app()
+app = create_app(seed_demo=os.getenv("CAIRN_SEED_DEMO", "1") == "1")
